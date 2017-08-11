@@ -31,7 +31,7 @@ public class DateUtil {
      * @return 当前日期（yyyyMMdd）
      */
     public static String getCurrShortDate() {
-        return LocalDate.now().toString(DT_SHORT_DATE);
+        return new DateTime().toString(DT_SHORT_DATE);
     }
 
     /**
@@ -40,7 +40,7 @@ public class DateUtil {
      * @return 当前时间（yyyy-MM-dd HH:mm:ss）
      */
     public static String getCurrDateTime() {
-        return LocalTime.now().toString(DT_LONG_DATE);
+        return DateTime.now().toString(DT_LONG_DATE);
     }
 
     /**
@@ -99,6 +99,23 @@ public class DateUtil {
         return Seconds.secondsBetween(start, end).getSeconds();
     }
 
+    /**
+     * 今天距离指定日期剩余天数
+     * <p>
+     *     当前日期：2017-08-11
+     *     oddDayOfDate(2017-08-01) = -10
+     *     oddDayOfDate(2017-08-15) = 3
+     * </p>
+     * @return 天数
+     */
+    public static int oddDayOfDate(String date){
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTime currDate = new DateTime();
+        DateTime paramDate = fmt.parseDateTime(date);
+
+        return Days.daysBetween(currDate,paramDate).getDays();
+
+    }
 
     /**
      * 是否包含在区间范围内（yyyy-MM-dd）
@@ -114,8 +131,6 @@ public class DateUtil {
         DateTime endTime =
             fmt.parseDateTime(end).withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59);
 
-        System.out.println(startTime.toString("yyyy-MM-dd HH:mm:ss"));
-        System.out.println(endTime.toString("yyyy-MM-dd HH:mm:ss"));
 
         Interval interval = new Interval(startTime, endTime);
         return interval.contains(new DateTime());
@@ -152,12 +167,15 @@ public class DateUtil {
         DateTime startTime = fmt.parseDateTime(dateStart);
         DateTime endTime = fmt.parseDateTime(dateEnd);
 
-        System.out.println(startTime.toString("yyyy-MM-dd HH:mm:ss"));
-        System.out.println(endTime.toString("yyyy-MM-dd HH:mm:ss"));
 
         Interval interval = new Interval(startTime, endTime);
         return interval.contains(new DateTime());
     }
+
+
+
+
+
 
 
 }
