@@ -4,7 +4,12 @@ package com.hk.utils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 
 /**
@@ -17,7 +22,7 @@ public class FTPUtil implements AutoCloseable {
     private FTPClient ftpClient;
 
 
-    public FTPUtil (String serverIP, int port, String userName, String password) throws IOException {
+    public FTPUtil(String serverIP, int port, String userName, String password) throws IOException {
         ftpClient = new FTPClient();
         ftpClient.connect(serverIP, port);
         ftpClient.login(userName, password);
@@ -29,14 +34,15 @@ public class FTPUtil implements AutoCloseable {
     /**
      * 下载ftp文件到本地
      *
-     * @param remoteFileName 远程文件
-     * @param localFileName  本地文件
+     * @param remoteFileName 远程文件名称
+     * @param localFile      本地文件[包含路径]
      * @return true/false
      */
-    public boolean downloadFile(String remoteFileName, String localFileName) throws IOException {
+    public boolean downloadFile(String remoteFileName, String localFile) throws IOException {
         boolean isSucc;
-        File outFileName = new File(localFileName);
-        if (ftpClient == null) throw new IOException("ftp server not login");
+        File outFileName = new File(localFile);
+        if (ftpClient == null)
+            throw new IOException("ftp server not login");
         try (OutputStream outputStream = new FileOutputStream(outFileName)) {
             isSucc = ftpClient.retrieveFile(remoteFileName, outputStream);
         }
@@ -46,15 +52,16 @@ public class FTPUtil implements AutoCloseable {
     /**
      * 上传文件制定目录
      *
-     * @param remoteFileName    远程文件名
-     * @param localFile         本地文件[必须带路径]
+     * @param remoteFileName 远程文件名
+     * @param localFile      本地文件[必须带路径]
      * @return true/false
      */
-    public boolean uploadFile(String remoteFileName, String localFile) throws IOException{
+    public boolean uploadFile(String remoteFileName, String localFile) throws IOException {
         boolean isSucc;
-        try(InputStream inputStream = new FileInputStream(localFile)){
-            if (ftpClient == null) throw new IOException("ftp server not login");
-            isSucc = ftpClient.storeFile(remoteFileName,inputStream);
+        try (InputStream inputStream = new FileInputStream(localFile)) {
+            if (ftpClient == null)
+                throw new IOException("ftp server not login");
+            isSucc = ftpClient.storeFile(remoteFileName, inputStream);
         }
         return isSucc;
     }
@@ -62,8 +69,8 @@ public class FTPUtil implements AutoCloseable {
     /**
      * 切换目录
      *
-     * @param path         创建目录
-     * @return             创建标志
+     * @param path 创建目录
+     * @return 创建标志
      * @throws IOException 异常
      */
     public boolean changeDirectory(String path) throws IOException {
@@ -73,11 +80,11 @@ public class FTPUtil implements AutoCloseable {
     /**
      * 创建目录
      *
-     * @param path          创建目录
-     * @return              创建标志
+     * @param path 创建目录
+     * @return 创建标志
      * @throws IOException
      */
-    public boolean createDirectory(String path) throws IOException{
+    public boolean createDirectory(String path) throws IOException {
         return ftpClient.makeDirectory(path);
     }
 
