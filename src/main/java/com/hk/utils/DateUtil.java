@@ -102,10 +102,15 @@ public class DateUtil {
     /**
      * 今天距离指定日期剩余天数
      * <p>
-     *     当前日期：2017-08-11
-     *     oddDayOfDate(2017-08-01) = -10
-     *     oddDayOfDate(2017-08-15) = 3
-     * </p>
+     * 例如：
+     * <pre>
+     *     {
+     *         当前日期：2017-08-11
+     *         oddDayOfDate(2017-08-01) = -10
+     *         oddDayOfDate(2017-08-15) = 3
+     *     }
+     * </pre>
+     * @param date 日期参数（yyyy-MM-dd）
      * @return 天数
      */
     public static int oddDayOfDate(String date){
