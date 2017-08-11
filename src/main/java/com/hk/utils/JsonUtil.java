@@ -29,11 +29,15 @@ public class JsonUtil {
 
     /**
      * 对象转换为JSON
+     * <p>show 方法的详细说明第一行<br>
      * <pre>
-     *      list字段如果为null，输出为[]，而不是null
-     *      数值字段如果为null，输出为0，而不是null
-     *      Boolean字段如果为null，输出为false，而不是null
-     *      字符类型字段如果为null，输出为""，而不是null
+     * 例如：
+     * {
+     *   list字段如果为null，输出为[]，而不是null
+     *   数值字段如果为null，输出为0，而不是null
+     *   Boolean字段如果为null，输出为false，而不是null
+     *   字符类型字段如果为null，输出为""，而不是null
+     * }
      * </pre>
      * @param object    对象
      * @return  字符串

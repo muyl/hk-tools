@@ -37,6 +37,7 @@ public class FTPUtil implements AutoCloseable {
      * @param remoteFileName 远程文件名称
      * @param localFile      本地文件[包含路径]
      * @return true/false
+     * @throws IOException 异常
      */
     public boolean downloadFile(String remoteFileName, String localFile) throws IOException {
         boolean isSucc;
@@ -55,6 +56,7 @@ public class FTPUtil implements AutoCloseable {
      * @param remoteFileName 远程文件名
      * @param localFile      本地文件[必须带路径]
      * @return true/false
+     * @throws IOException 异常
      */
     public boolean uploadFile(String remoteFileName, String localFile) throws IOException {
         boolean isSucc;
@@ -82,7 +84,7 @@ public class FTPUtil implements AutoCloseable {
      *
      * @param path 创建目录
      * @return 创建标志
-     * @throws IOException
+     * @throws IOException 异常
      */
     public boolean createDirectory(String path) throws IOException {
         return ftpClient.makeDirectory(path);
