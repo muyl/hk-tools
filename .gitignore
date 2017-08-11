@@ -30,3 +30,7 @@ hs_err_pid*
 /.idea/modules.xml
 /.idea/vcs.xml
 /.idea/encodings.xml
+/.idea/libraries/
+/hk-api.iml
+/.gitignore
+/src/test/
