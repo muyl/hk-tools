@@ -62,11 +62,23 @@ public class FTPUtil implements AutoCloseable {
     /**
      * 切换目录
      *
-     * @param path         目录
+     * @param path         创建目录
+     * @return             创建标志
      * @throws IOException 异常
      */
-    private void changeDirectory(String path) throws IOException {
-        ftpClient.changeWorkingDirectory(path);
+    public boolean changeDirectory(String path) throws IOException {
+        return ftpClient.changeWorkingDirectory(path);
+    }
+
+    /**
+     * 创建目录
+     *
+     * @param path          创建目录
+     * @return              创建标志
+     * @throws IOException
+     */
+    public boolean createDirectory(String path) throws IOException{
+        return ftpClient.makeDirectory(path);
     }
 
 
