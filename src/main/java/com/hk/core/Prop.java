@@ -1,6 +1,5 @@
 package com.hk.core;
 
-import com.hk.core.Const;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -22,7 +21,7 @@ public class Prop {
 
     /**
      * Prop constructor.
-     *
+     * @param fileName 文件名称
      * @see #Prop(String, String)
      */
     public Prop(String fileName) {
@@ -66,7 +65,7 @@ public class Prop {
 
     /**
      * Prop constructor.
-     *
+     * @param file 文件
      * @see #Prop(File, String)
      */
     public Prop(File file) {

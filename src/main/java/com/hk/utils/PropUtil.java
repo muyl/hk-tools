@@ -21,8 +21,9 @@ public class PropUtil {
 
     /**
      * Using the properties file. It will loading the properties file if not loading.
-     *
      * @see #use(String, String)
+     * @param fileName fileName loading
+     * @return the properties instance
      */
     public static Prop use(String fileName) {
         return use(fileName, Const.DEFAULT_ENCODING);
@@ -30,19 +31,17 @@ public class PropUtil {
 
     /**
      * Using the properties file. It will loading the properties file if not loading.
-     * <p>
      * Example:<br>
      * PropKit.use("config.txt", "UTF-8");<br>
-     * PropKit.use("other_config.txt", "UTF-8");<br><br>
+     * PropKit.use("other_config.txt", "UTF-8");<br>
      * String userName = PropKit.get("userName");<br>
-     * <p>
-     * String password = PropKit.get("password");<br><br>
+     * String password = PropKit.get("password");<br>
      * userName = PropKit.use("other_config.txt").get("userName");<br>
-     * password = PropKit.use("other_config.txt").get("password");<br><br>
-     * PropKit.use("com/jfinal/config_in_sub_directory_of_classpath.txt");
+     * password = PropKit.use("other_config.txt").get("password");<br>
      *
-     * @param fileName the properties file's name in classpath or the sub directory of classpath
-     * @param encoding the encoding
+     * @param fileName loading the properties file
+     * @param encoding file encoding
+     * @return the properties instance
      */
     public static Prop use(String fileName, String encoding) {
         Prop result = map.get(fileName);
@@ -60,6 +59,8 @@ public class PropUtil {
      * Using the properties file bye File object. It will loading the properties file if not loading.
      *
      * @see #use(File, String)
+     * @param file the properties File object
+     * @return the properties instance
      */
     public static Prop use(File file) {
         return use(file, Const.DEFAULT_ENCODING);
@@ -67,15 +68,13 @@ public class PropUtil {
 
     /**
      * Using the properties file bye File object. It will loading the properties file if not loading.
-     * <p>
      * Example:<br>
-     * <p>
      * PropKit.use(new File("/var/config/my_config.txt"), "UTF-8");<br>
-     * <p>
      * Strig userName = PropKit.use("my_config.txt").get("userName");
      *
      * @param file     the properties File object
      * @param encoding the encoding
+     * @return the properties instance
      */
     public static Prop use(File file, String encoding) {
         Prop result = map.get(file.getName());
