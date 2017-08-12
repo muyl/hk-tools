@@ -52,6 +52,7 @@ public class FTPUtil implements AutoCloseable {
 
     /**
      * 上传文件
+     * Example:<br>
      *
      * @param remoteFileName 远程文件名
      * @param localFile      本地文件[绝对路径]
