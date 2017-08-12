@@ -20,12 +20,13 @@ public class JsonUtil {
         config.put(java.sql.Date.class, new JSONLibDataFormatSerializer()); // 使用和json-lib兼容的日期输出格式
     }
 
-    private static final SerializerFeature[] features = { SerializerFeature.WriteMapNullValue, // 输出空置字段
-        SerializerFeature.WriteNullListAsEmpty, // list字段如果为null，输出为[]，而不是null
-        SerializerFeature.WriteNullNumberAsZero, // 数值字段如果为null，输出为0，而不是null
-        SerializerFeature.WriteNullBooleanAsFalse, // Boolean字段如果为null，输出为false，而不是null
-        SerializerFeature.WriteNullStringAsEmpty // 字符类型字段如果为null，输出为""，而不是null
-    };
+    private static final SerializerFeature[] features =
+        {SerializerFeature.WriteMapNullValue, // 输出空置字段
+            SerializerFeature.WriteNullListAsEmpty, // list字段如果为null，输出为[]，而不是null
+            SerializerFeature.WriteNullNumberAsZero, // 数值字段如果为null，输出为0，而不是null
+            SerializerFeature.WriteNullBooleanAsFalse, // Boolean字段如果为null，输出为false，而不是null
+            SerializerFeature.WriteNullStringAsEmpty // 字符类型字段如果为null，输出为""，而不是null
+        };
 
     /**
      * 对象转换为JSON
@@ -39,8 +40,9 @@ public class JsonUtil {
      *   字符类型字段如果为null，输出为""，而不是null
      * }
      * </pre>
-     * @param object    对象
-     * @return  字符串
+     *
+     * @param object 对象
+     * @return 字符串
      */
     public static String toJSONString(Object object) {
         return JSON.toJSONString(object, config, features);
@@ -48,7 +50,8 @@ public class JsonUtil {
 
     /**
      * 对象装换为JSON
-     * @param object    对象
+     *
+     * @param object 对象
      * @return 字符串
      */
     public static String toJSONNoFeatures(Object object) {
@@ -57,17 +60,15 @@ public class JsonUtil {
 
     /**
      * json对象转为Bean
-     * @param text    json字符串
-     * @param clazz   bean对象
-     * @param <T>     bean类型
-     * @return        bean
+     *
+     * @param text  json字符串
+     * @param clazz bean对象
+     * @param <T>   bean类型
+     * @return bean
      */
     public static <T> T toBean(String text, Class<T> clazz) {
         return JSON.parseObject(text, clazz);
     }
-
-
-
 
 
 

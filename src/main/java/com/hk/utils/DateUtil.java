@@ -100,8 +100,7 @@ public class DateUtil {
     }
 
     /**
-     * 今天距离指定日期剩余天数
-     * <p>
+     * <p>今天距离指定日期剩余天数</p>
      * 例如：
      * <pre>
      *     {
@@ -110,15 +109,16 @@ public class DateUtil {
      *         oddDayOfDate(2017-08-15) = 3
      *     }
      * </pre>
+     *
      * @param date 日期参数（yyyy-MM-dd）
      * @return 天数
      */
-    public static int oddDayOfDate(String date){
+    public static int oddDayOfDate(String date) {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
         DateTime currDate = new DateTime();
         DateTime paramDate = fmt.parseDateTime(date);
 
-        return Days.daysBetween(currDate,paramDate).getDays();
+        return Days.daysBetween(currDate, paramDate).getDays();
 
     }
 
@@ -127,7 +127,7 @@ public class DateUtil {
      *
      * @param start 开始日期
      * @param end   结束日期
-     * @return 比较结果
+     * @return true/false
      */
     public static boolean containsIntervalOfDate(String start, String end) {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
@@ -146,7 +146,7 @@ public class DateUtil {
      *
      * @param start 开始日期
      * @param end   结束日期
-     * @return 比较结果
+     * @return true/false
      */
     public static boolean containsIntervalOfDateTime(String start, String end) {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
@@ -161,9 +161,10 @@ public class DateUtil {
 
     /**
      * 是否包含在指定的区间范围内
+     *
      * @param start 开始时间
-     * @param end 结束时间
-     * @return 比较结果
+     * @param end   结束时间
+     * @return true/false
      */
     public static boolean containsIntervalOfTime(String start, String end) {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
@@ -176,10 +177,6 @@ public class DateUtil {
         Interval interval = new Interval(startTime, endTime);
         return interval.contains(new DateTime());
     }
-
-
-
-
 
 
 
