@@ -55,6 +55,20 @@ public class JsonUtil {
         return JSON.toJSONString(object, config);
     }
 
+    /**
+     * json对象转为Bean
+     * @param text    json字符串
+     * @param clazz   bean对象
+     * @param <T>     bean类型
+     * @return        bean
+     */
+    public static <T> T toBean(String text, Class<T> clazz) {
+        return JSON.parseObject(text, clazz);
+    }
+
+
+
+
 
 
 }
