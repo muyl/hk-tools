@@ -129,13 +129,10 @@ public class DateUtil {
      * @param end   结束日期
      * @return true/false
      */
-    public static boolean containsIntervalOfDate(String start, String end) {
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
-        DateTime startTime =
-            fmt.parseDateTime(start).withHourOfDay(00).withMinuteOfHour(00).withSecondOfMinute(00);
-        DateTime endTime =
-            fmt.parseDateTime(end).withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59);
+    public static boolean intervalDate(String start, String end) {
 
+        DateTime startTime = getMinDateTime(start);
+        DateTime endTime = getMaxDateTime(end);
 
         Interval interval = new Interval(startTime, endTime);
         return interval.contains(new DateTime());
@@ -148,13 +145,45 @@ public class DateUtil {
      * @param end   结束日期
      * @return true/false
      */
-    public static boolean containsIntervalOfDateTime(String start, String end) {
+    public static boolean intervalDateTime(String start, String end) {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
         DateTime startTime = fmt.parseDateTime(start);
         DateTime endTime = fmt.parseDateTime(end);
 
         Interval interval = new Interval(startTime, endTime);
         return interval.contains(new DateTime());
+    }
+
+    /**
+     * <p>获取指定日期开始时间(yyyy-MM-dd 00:00:00)</p>
+     * <pre>
+     *     getMinDateTime("2017-01-01") = "2017-01-01 00:00:00"
+     * </pre>
+     *
+     * @param date (yyyy-MM-dd)
+     * @return yyyy-MM-dd 00:00:00
+     */
+    public static DateTime getMinDateTime(String date) {
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTime startTime =
+            fmt.parseDateTime(date).withHourOfDay(00).withMinuteOfHour(00).withSecondOfMinute(00);
+        return startTime;
+    }
+
+    /**
+     * <p>获取指定日期开始时间(yyyy-MM-dd 23:59:59)</p>
+     * <pre>
+     *     getMaxDateTime("2017-01-01") = "2017-01-01 23:59:59"
+     * </pre>
+     *
+     * @param date (yyyy-MM-dd)
+     * @return endTime
+     */
+    public static DateTime getMaxDateTime(String date) {
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTime endTime =
+            fmt.parseDateTime(date).withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59);
+        return endTime;
     }
 
 
@@ -166,7 +195,7 @@ public class DateUtil {
      * @param end   结束时间
      * @return true/false
      */
-    public static boolean containsIntervalOfTime(String start, String end) {
+    public static boolean intervalOfTime(String start, String end) {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
         String dateStart = getCurrDate() + " " + start;
         String dateEnd = getCurrDate() + " " + end;

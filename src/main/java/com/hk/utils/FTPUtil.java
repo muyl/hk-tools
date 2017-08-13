@@ -21,8 +21,16 @@ public class FTPUtil implements AutoCloseable {
 
     private FTPClient ftpClient;
 
-
-    public FTPUtil(String serverIP, int port, String userName, String password) throws IOException {
+    /**
+     * 连接ftp服务器
+     *
+     * @param serverIP 服务IP
+     * @param port     端口
+     * @param userName 用户名
+     * @param password 密码
+     * @throws IOException IOException
+     */
+    public void connectServer(String serverIP, int port, String userName, String password) throws IOException {
         ftpClient = new FTPClient();
         ftpClient.connect(serverIP, port);
         ftpClient.login(userName, password);
