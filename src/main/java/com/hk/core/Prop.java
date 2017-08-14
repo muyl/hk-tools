@@ -39,10 +39,7 @@ public class Prop {
      * @param encoding the encoding
      */
     public Prop(String fileName, String encoding) {
-        InputStream inputStream = null;
-        try {
-            inputStream =
-                getClassLoader().getResourceAsStream(fileName);        // properties.load(Prop.class.getResourceAsStream(fileName));
+        try (InputStream inputStream = getClassLoader().getResourceAsStream(fileName)){
 
             if (inputStream == null) {
                 throw new IllegalArgumentException(
@@ -52,9 +49,6 @@ public class Prop {
             properties.load(new InputStreamReader(inputStream, encoding));
         } catch (IOException e) {
             throw new RuntimeException("Error loading properties file.", e);
-        } finally {
-            if (inputStream != null)
-                try {inputStream.close();} catch (IOException e) {log.error(e.getMessage(), e);}
         }
     }
 
