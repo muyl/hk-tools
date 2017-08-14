@@ -17,7 +17,7 @@ public class DateUtil {
     private static final String DT_TIME = "HH:mm:ss";
 
     /**
-     * 获取当前日期
+     * <p>获取当前日期</p>
      *
      * @return 当前日期（yyyy-MM-dd）
      */
@@ -26,7 +26,7 @@ public class DateUtil {
     }
 
     /**
-     * 获取当前日期
+     * <p>获取当前日期</p>
      *
      * @return 当前日期（yyyyMMdd）
      */
@@ -35,7 +35,7 @@ public class DateUtil {
     }
 
     /**
-     * 获取当前时间
+     * <p>获取当前时间</p>
      *
      * @return 当前时间（yyyy-MM-dd HH:mm:ss）
      */
@@ -44,7 +44,7 @@ public class DateUtil {
     }
 
     /**
-     * 获取当前时间（HH:mm:ss）
+     * <p>获取当前时间（HH:mm:ss）</p>
      *
      * @return 获取当前时间
      */
@@ -53,7 +53,7 @@ public class DateUtil {
     }
 
     /**
-     * 获取今天剩余的秒数
+     * <p>获取今天剩余的秒数</p>
      *
      * @return 秒数
      */
@@ -64,7 +64,7 @@ public class DateUtil {
     }
 
     /**
-     * 获取本周剩余的秒数
+     * <p>获取本周剩余的秒数</p>
      *
      * @return 秒数
      */
@@ -76,7 +76,7 @@ public class DateUtil {
     }
 
     /**
-     * 获取本月剩余的秒数
+     * <p>获取本月剩余的秒数</p>
      *
      * @return 秒数
      */
@@ -88,7 +88,7 @@ public class DateUtil {
     }
 
     /**
-     * 获取今年剩余的秒数
+     * <p>获取今年剩余的秒数</p>
      *
      * @return 秒数
      */
@@ -123,7 +123,7 @@ public class DateUtil {
     }
 
     /**
-     * 是否包含在区间范围内（yyyy-MM-dd）
+     * <p>是否包含在区间范围内（yyyy-MM-dd）</p>
      *
      * @param start 开始日期
      * @param end   结束日期
@@ -139,7 +139,7 @@ public class DateUtil {
     }
 
     /**
-     * 是否包含在区间范围内（yyyy-MM-dd HH:mm:ss）
+     * <p>是否包含在区间范围内（yyyy-MM-dd HH:mm:ss）</p>
      *
      * @param start 开始日期
      * @param end   结束日期
@@ -189,7 +189,7 @@ public class DateUtil {
 
 
     /**
-     * 是否包含在指定的区间范围内
+     * <p>是否包含在指定的区间范围内</p>
      *
      * @param start 开始时间
      * @param end   结束时间

@@ -22,7 +22,7 @@ public class FTPUtil implements AutoCloseable {
     private FTPClient ftpClient;
 
     /**
-     * 连接ftp服务器
+     * <p>连接ftp服务器</p>
      *
      * @param serverIP 服务IP
      * @param port     端口
@@ -40,7 +40,7 @@ public class FTPUtil implements AutoCloseable {
     }
 
     /**
-     * 下载ftp文件到本地
+     * <p>下载ftp文件到本地</p>
      *
      * @param remoteFileName 远程文件名称
      * @param localFile      本地文件[绝对路径]
@@ -59,7 +59,7 @@ public class FTPUtil implements AutoCloseable {
     }
 
     /**
-     * 上传文件
+     * <p>上传文件</p>
      * Example:<br>
      *
      * @param remoteFileName 远程文件名
@@ -102,7 +102,7 @@ public class FTPUtil implements AutoCloseable {
     }
 
     /**
-     * 切换目录
+     * <p>切换目录</p>
      *
      * @param path 创建目录
      * @return true/false
@@ -113,7 +113,7 @@ public class FTPUtil implements AutoCloseable {
     }
 
     /**
-     * 创建目录
+     * <p>创建目录</p>
      *
      * @param path 创建目录
      * @return true/false
@@ -125,7 +125,7 @@ public class FTPUtil implements AutoCloseable {
 
 
     /**
-     * 自动关闭资源
+     * <p>自动关闭资源</p>
      */
     @Override
     public void close() throws Exception {
