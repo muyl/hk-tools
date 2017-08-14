@@ -11,10 +11,12 @@ import org.joda.time.format.DateTimeFormatter;
  */
 public class DateUtil {
 
-    private static final String DT_STANDARD = "yyyy-MM-dd";
+    private static final String DT_STANDARD_DATE = "yyyy-MM-dd";
     private static final String DT_SHORT_DATE = "yyyyMMdd";
-    private static final String DT_LONG_DATE = "yyyy-MM-dd HH:mm:ss";
-    private static final String DT_TIME = "HH:mm:ss";
+    private static final String DT_STANDARD_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
+    private static final String DT_STANDARD_TIME = "HH:mm:ss";
+    private static final String DT_SHORT_TIME = "HHmmss";
+
 
     /**
      * <p>获取当前日期</p>
@@ -22,7 +24,7 @@ public class DateUtil {
      * @return 当前日期（yyyy-MM-dd）
      */
     public static String getCurrDate() {
-        return LocalDate.now().toString(DT_STANDARD);
+        return LocalDate.now().toString(DT_STANDARD_DATE);
     }
 
     /**
@@ -40,7 +42,7 @@ public class DateUtil {
      * @return 当前时间（yyyy-MM-dd HH:mm:ss）
      */
     public static String getCurrDateTime() {
-        return DateTime.now().toString(DT_LONG_DATE);
+        return DateTime.now().toString(DT_STANDARD_DATE_TIME);
     }
 
     /**
@@ -49,7 +51,16 @@ public class DateUtil {
      * @return 获取当前时间
      */
     public static String getCurrTime() {
-        return LocalTime.now().toString(DT_TIME);
+        return LocalTime.now().toString(DT_STANDARD_TIME);
+    }
+
+    /**
+     * <p>获取当前时间（HHmmss）</p>
+     *
+     * @return 获取当前时间
+     */
+    public static String getCurrShortTime() {
+        return LocalTime.now().toString(DT_SHORT_TIME);
     }
 
     /**

@@ -28,4 +28,3 @@ hs_err_pid*
 /doc/
 /hk-api.iml
 /.gitignore
-/src/test/

@@ -22,6 +22,18 @@ public class DateUtilTest {
     }
 
     @Test
+    public void getCurrTime() throws Exception {
+        log.info("当前时间：" + DateUtil.getCurrTime());
+        Assert.assertNotNull(DateUtil.getCurrTime());
+    }
+
+    @Test
+    public void getCurrShortTime() throws Exception {
+        log.info("当前短时间：" + DateUtil.getCurrShortTime());
+        Assert.assertNotNull(DateUtil.getCurrShortTime());
+    }
+
+    @Test
     public void getCurrShortDate() throws Exception {
         log.info("当前日期（短）：" + DateUtil.getCurrShortDate());
         Assert.assertNotNull(DateUtil.getCurrShortDate());
@@ -33,11 +45,7 @@ public class DateUtilTest {
         Assert.assertNotNull(DateUtil.getCurrDateTime());
     }
 
-    @Test
-    public void getCurrTime() throws Exception {
-        log.info("当前时间：" + DateUtil.getCurrTime());
-        Assert.assertNotNull(DateUtil.getCurrTime());
-    }
+
 
     @Test
     public void oddSecondOfDay() throws Exception {
@@ -62,9 +70,26 @@ public class DateUtilTest {
         log.info("今年剩余秒数：" + DateUtil.oddSecondOfYear());
         Assert.assertNotNull(DateUtil.oddSecondOfYear());
     }
+
     @Test
-    public void oddDayOfDate(){
-        log.info("今年剩余秒数：" + DateUtil.oddDayOfDate("2017-08-15"));
+    public void oddDayOfDate() {
+        log.info("到指定日期剩余秒数：" + DateUtil.oddDayOfDate("2017-08-15"));
+    }
+
+    @Test
+    public void intervalDate() {
+        log.info("今天是否在指定的区间范围内：" + DateUtil.intervalDate("2017-08-14", "2017-09-01"));
+    }
+
+    @Test
+    public void intervalDateTime() {
+        log.info("今天是否在指定的区间范围内："
+            + DateUtil.intervalDateTime("2017-08-14 00:00:00", "2017-09-01 23:59:59"));
+    }
+
+    @Test
+    public void intervalOfTime() {
+        log.info("今天是否在指定的区间范围内：" + DateUtil.intervalOfTime("10:00:00", "13:59:59"));
     }
 
 }
