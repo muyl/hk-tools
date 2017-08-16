@@ -37,6 +37,7 @@ public class FTPUtil implements AutoCloseable {
         ftpClient.setBufferSize(1024);//设置上传缓存大小
         ftpClient.setControlEncoding("UTF-8");//设置编码
         ftpClient.setFileType(FTP.BINARY_FILE_TYPE);//设置文件类型
+        ftpClient.enterLocalPassiveMode();
     }
 
     /**
@@ -53,6 +54,27 @@ public class FTPUtil implements AutoCloseable {
         if (ftpClient == null)
             throw new IOException("ftp server not login");
         try (OutputStream outputStream = new FileOutputStream(outFileName)) {
+            isSucc = ftpClient.retrieveFile(remoteFileName, outputStream);
+        }
+        return isSucc;
+    }
+
+    /**
+     * <p>下载ftp文件到本地</p>
+     *
+     * @param path           文件路径
+     * @param remoteFileName 远程文件
+     * @param localFile      本地文件
+     * @return true/false
+     * @throws IOException
+     */
+    public boolean downloadFile(String path, String remoteFileName, String localFile) throws IOException {
+        boolean isSucc;
+        File outFileName = new File(localFile);
+        if (ftpClient == null)
+            throw new IOException("ftp server not login");
+        try (OutputStream outputStream = new FileOutputStream(outFileName)) {
+            ftpClient.changeWorkingDirectory(path);
             isSucc = ftpClient.retrieveFile(remoteFileName, outputStream);
         }
         return isSucc;
