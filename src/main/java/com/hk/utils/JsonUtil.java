@@ -1,9 +1,12 @@
 package com.hk.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.serializer.JSONLibDataFormatSerializer;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+
+import java.util.List;
 
 /**
  * User: hk
@@ -63,11 +66,21 @@ public class JsonUtil {
      *
      * @param text  json字符串
      * @param clazz bean对象
-     * @param <T>   bean类型
      * @return bean
      */
     public static <T> T toBean(String text, Class<T> clazz) {
         return JSON.parseObject(text, clazz);
+    }
+
+    /**
+     * json转为List对象
+     *
+     * @param text  json字符串
+     * @param clazz 转换类型
+     * @return
+     */
+    public static <T> List<T> toList(String text, Class<T> clazz) {
+        return JSONArray.parseArray(text, clazz);
     }
 
 

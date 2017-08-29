@@ -22,7 +22,7 @@ public class FTPUtilTest {
     public void downloadFile() throws Exception {
         try (FTPUtil ftpUtil = new FTPUtil()) {
             ftpUtil.connectServer("10.211.55.6", 21, "ftpuser", "123qwe");
-            boolean isSucc = ftpUtil.downloadFile("2.txt", "/Users/muyl/Desktop/22.txt");
+            boolean isSucc = ftpUtil.downloadFile("2.txt", "/Users/muyl/Desktop/23.txt");
             log.info("isSucc:" + isSucc);
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,7 +33,7 @@ public class FTPUtilTest {
     public void uploadFile() throws Exception {
         try (FTPUtil ftpUtil = new FTPUtil()) {
             ftpUtil.connectServer("10.211.55.6", 21, "ftpuser", "123qwe");
-            boolean isSucc = ftpUtil.uploadFile("2.txt", "/Users/muyl/Desktop/22.txt");
+            boolean isSucc = ftpUtil.uploadFile("3.txt", "/Users/muyl/Desktop/Mycat 安装步骤.docx");
             log.info("isSucc:" + isSucc);
         } catch (Exception e) {
             e.printStackTrace();
