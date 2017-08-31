@@ -92,4 +92,14 @@ public class DateUtilTest {
         log.info("今天是否在指定的区间范围内：" + DateUtil.intervalOfTime("10:00:00", "13:59:59"));
     }
 
+    @Test
+    public void isAfterNow(){
+        log.info("2017-08-08 12:12:12是否在当前日期之后：" +DateUtil.isAfterNow("2017-08-08 12:12:12"));
+    }
+
+    @Test
+    public void isBeforeNow(){
+        log.info("2017-08-08 12:12:12是否在当前日期之前：" +DateUtil.isBeforeNow("2017-08-08 12:12:12"));
+    }
+
 }

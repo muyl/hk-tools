@@ -218,6 +218,33 @@ public class DateUtil {
         return interval.contains(new DateTime());
     }
 
+    /**
+     * 字符串转换DateTime
+     * @param date 日期
+     */
+    public static DateTime parseDateTime(String date){
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        return fmt.parseDateTime(date);
+    }
+
+    /**
+     * 参数日期是否在开当前日期之后
+     * @param date 日期【yyyy-MM-dd HH:mm:ss】
+     */
+    public static boolean isAfterNow(String date){
+        DateTime dateTime = parseDateTime(date);
+        return dateTime.isAfterNow();
+    }
+
+    /**
+     * 参数日期是否在开当前日期之后
+     * @param date 日期【yyyy-MM-dd HH:mm:ss】
+     */
+    public static boolean isBeforeNow(String date){
+        DateTime dateTime = parseDateTime(date);
+        return dateTime.isBeforeNow();
+    }
+
 
 
 }
