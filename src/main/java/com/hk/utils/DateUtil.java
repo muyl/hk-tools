@@ -32,7 +32,7 @@ public class DateUtil {
      *
      * @return 当前日期（yyyyMMdd）
      */
-    public static String getCurrShortDate() {
+    public static String getCurrDate8() {
         return new DateTime().toString(DT_SHORT_DATE);
     }
 
@@ -59,7 +59,7 @@ public class DateUtil {
      *
      * @return 获取当前时间
      */
-    public static String getCurrShortTime() {
+    public static String getCurrTime6() {
         return LocalTime.now().toString(DT_SHORT_TIME);
     }
 

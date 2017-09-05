@@ -28,15 +28,15 @@ public class DateUtilTest {
     }
 
     @Test
-    public void getCurrShortTime() throws Exception {
-        log.info("当前短时间：" + DateUtil.getCurrShortTime());
-        Assert.assertNotNull(DateUtil.getCurrShortTime());
+    public void getCurrTime6() throws Exception {
+        log.info("当前短时间：" + DateUtil.getCurrTime6());
+        Assert.assertNotNull(DateUtil.getCurrTime6());
     }
 
     @Test
-    public void getCurrShortDate() throws Exception {
-        log.info("当前日期（短）：" + DateUtil.getCurrShortDate());
-        Assert.assertNotNull(DateUtil.getCurrShortDate());
+    public void getCurrDate8() throws Exception {
+        log.info("当前日期（短）：" + DateUtil.getCurrDate8());
+        Assert.assertNotNull(DateUtil.getCurrDate8());
     }
 
     @Test
