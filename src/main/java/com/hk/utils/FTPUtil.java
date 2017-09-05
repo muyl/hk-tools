@@ -37,7 +37,7 @@ public class FTPUtil implements AutoCloseable {
         ftpClient.setBufferSize(1024);//设置上传缓存大小
         ftpClient.setControlEncoding("UTF-8");//设置编码
         ftpClient.setFileType(FTP.BINARY_FILE_TYPE);//设置文件类型
-//        ftpClient.enterLocalPassiveMode();
+        ftpClient.enterLocalPassiveMode();
     }
 
     /**
