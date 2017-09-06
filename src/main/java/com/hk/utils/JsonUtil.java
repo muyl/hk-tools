@@ -13,7 +13,7 @@ import java.util.List;
  * Date: 2017/8/10 下午4:31
  * version: 1.0
  */
-public class JsonUtil {
+public final class JsonUtil {
 
     private static final SerializeConfig config;
 

@@ -5,7 +5,7 @@ package com.hk.utils;
  * Date: 2017/8/12 上午7:11
  * version: 1.0
  */
-public class StringUtil {
+public final class StringUtil {
 
     public static final String EMPTY = "";
 

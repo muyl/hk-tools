@@ -9,7 +9,7 @@ import org.joda.time.format.DateTimeFormatter;
  * Date: 2017/8/10 下午4:31
  * version: 1.0
  */
-public class DateUtil {
+public final class DateUtil {
 
     private static final String DT_STANDARD_DATE = "yyyy-MM-dd";
     private static final String DT_SHORT_DATE = "yyyyMMdd";

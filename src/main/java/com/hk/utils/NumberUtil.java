@@ -7,7 +7,7 @@ import com.google.common.primitives.Ints;
  * Date: 2017/8/30 上午9:40
  * version: 1.0
  */
-public class NumberUtil {
+public final class NumberUtil {
 
     public static int toInt(String str){
         return Ints.tryParse(str);

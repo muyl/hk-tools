@@ -21,7 +21,7 @@ import java.util.Vector;
  * Date: 2017/8/10 下午4:31
  * version: 1.0
  */
-public class SFTPUtil implements AutoCloseable {
+public final class SFTPUtil implements AutoCloseable {
 
     private Session session = null;
     private ChannelSftp channel = null;

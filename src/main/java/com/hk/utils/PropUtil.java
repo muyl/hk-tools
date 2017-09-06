@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Date: 2017/8/12 上午9:48
  * version: 1.0
  */
-public class PropUtil {
+public final class PropUtil {
 
     private static Prop prop = null;
     private static final ConcurrentHashMap<String, Prop> map = new ConcurrentHashMap<>();
