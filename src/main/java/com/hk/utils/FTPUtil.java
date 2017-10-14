@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 
@@ -155,5 +156,13 @@ public final class FTPUtil implements AutoCloseable {
             ftpClient.logout();
             ftpClient.disconnect();
         }
+    }
+
+    public static void main(String[] args) throws Exception{
+        String remotePath = args[0];
+        String fileName = args[1];
+        FTPUtil ftpUtil = new FTPUtil();
+        ftpUtil.connectServer("195.203.6.218",21,"ftptest","ftptest");
+        ftpUtil.downloadFile(remotePath,fileName,"d://");
     }
 }
