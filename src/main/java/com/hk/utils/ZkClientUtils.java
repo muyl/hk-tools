@@ -17,7 +17,7 @@ import java.util.List;
  * zookeeper工具类
  */
 @Slf4j
-public class ZooKeeperUtils implements AutoCloseable {
+public class ZkClientUtils implements AutoCloseable {
     private  CuratorFramework client; // 客户端
 
     /**
@@ -158,7 +158,6 @@ public class ZooKeeperUtils implements AutoCloseable {
         }
     }
 
-
     @Override
     public void close() {
         if ((null != this.client)
@@ -169,18 +168,4 @@ public class ZooKeeperUtils implements AutoCloseable {
         System.out.println("关闭连接");
     }
 
-    public static void main(String[] args) {
-        try (ZooKeeperUtils zooKeeperUtils = new ZooKeeperUtils()) {
-//            boolean isSucc = zooKeeperUtils.connectServer("localhost:2181");
-////            zooKeeperUtils.deleteNode("/servers");
-////            zooKeeperUtils.createNode("/servers/timer", "111");
-////            System.out.println(zooKeeperUtils.readNode("/servers/timer"));
-////            List list = zooKeeperUtils.readClildrenList("/servers");
-////            System.out.println(list.size());
-//            zooKeeperUtils.createEphemeralNode("/servers/timer/127.0.0.1:8080","1111");
-            //System.in.read();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
