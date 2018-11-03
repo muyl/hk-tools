@@ -6,19 +6,21 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.imps.CuratorFrameworkState;
+import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.retry.RetryNTimes;
 import org.apache.curator.shaded.com.google.common.base.Charsets;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * zookeeper工具类
  */
 @Slf4j
 public class ZkClientUtils implements AutoCloseable {
-    private  CuratorFramework client; // 客户端
+    private CuratorFramework client; // 客户端
 
     /**
      * 连接zookeeper服务
@@ -26,9 +28,9 @@ public class ZkClientUtils implements AutoCloseable {
      * @param zkAddress 服务地址
      * @return 连接标志
      */
-    public boolean connectServer(String zkAddress) {
+    public CuratorFramework connectServer(String zkAddress) {
         if (client == null) {
-            synchronized (CuratorFramework.class) {
+            synchronized (ZkClientUtils.class) {
                 if (client == null) {
                     client = CuratorFrameworkFactory.builder().connectString(zkAddress).sessionTimeoutMs(RPCConstant.SESSION_TIMEOUT)
                             .retryPolicy(new RetryNTimes(RPCConstant.REGRY_TIMES, RPCConstant.REGRY_TIME))
@@ -37,7 +39,7 @@ public class ZkClientUtils implements AutoCloseable {
                 }
             }
         }
-        return client.isStarted();
+        return client;
     }
 
     /**
@@ -149,7 +151,11 @@ public class ZkClientUtils implements AutoCloseable {
         }
     }
 
-
+    /**
+     * 删除节点
+     *
+     * @param nodeName 节点路径
+     */
     public void deleteNode(String nodeName) {
         try {
             client.delete().deletingChildrenIfNeeded().forPath(nodeName);
@@ -157,6 +163,12 @@ public class ZkClientUtils implements AutoCloseable {
             e.printStackTrace();
         }
     }
+
+    public InterProcessMutex tryLock(String nodeName){
+        InterProcessMutex lock = new InterProcessMutex(client,nodeName);
+        return lock;
+    }
+
 
     @Override
     public void close() {
@@ -166,6 +178,53 @@ public class ZkClientUtils implements AutoCloseable {
             this.client.close();
         }
         System.out.println("关闭连接");
+    }
+
+    static int count = 10;
+    public static void genarNo(){
+        try {
+            count--;
+            System.out.println(count);
+        } finally {
+
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            ZkClientUtils zkClientUtils = new ZkClientUtils();
+            CuratorFramework client = zkClientUtils.connectServer("localhost:2181");
+            final InterProcessMutex lock = new InterProcessMutex(client, "/super");
+            final CountDownLatch countdown = new CountDownLatch(1);
+            for(int i = 0; i < 10; i++){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            countdown.await();
+                            //加锁
+                            lock.acquire();
+                            //-------------业务处理开始
+                            genarNo();
+                            //-------------业务处理结束
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                //释放
+                                lock.release();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },"t" + i).start();
+            }
+            Thread.sleep(100);
+            countdown.countDown();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
