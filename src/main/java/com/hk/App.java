@@ -1,7 +1,6 @@
 package com.hk;
 
 import com.google.common.collect.Lists;
-import com.hk.utils.ZkClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -10,11 +9,7 @@ import org.apache.curator.framework.recipes.leader.LeaderLatchListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.utils.CloseableUtils;
 
-import java.io.IOException;
-import java.net.InetAddress;
 import java.util.List;
-
-import static org.jboss.netty.handler.codec.spdy.SpdyHeaders.HttpNames.PATH;
 
 /**
  * Hello world!
