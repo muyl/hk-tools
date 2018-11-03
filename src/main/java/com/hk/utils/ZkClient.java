@@ -1,63 +1,69 @@
 package com.hk.utils;
 
 import com.hk.constant.RPCConstant;
+import com.hk.domain.URL;
+import com.hk.service.ChildListener;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.framework.api.CuratorWatcher;
 import org.apache.curator.framework.imps.CuratorFrameworkState;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.retry.RetryNTimes;
 import org.apache.curator.shaded.com.google.common.base.Charsets;
 import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * zookeeper工具类
  */
 @Slf4j
-public class ZkClientUtils implements AutoCloseable {
+public class ZkClient implements AutoCloseable {
     private CuratorFramework client; // 客户端
 
+    public ZkClient(URL url) {
+        try {
+            CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
+                    .connectString(url.getHost())
+                    .retryPolicy(new RetryNTimes(Integer.MAX_VALUE, 1000))
+                    .connectionTimeoutMs(5000);
+            client = builder.build();
+            client.start();
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        }
+    }
+
     /**
-     * 连接zookeeper服务
+     * 获取是否连接到zookeeper
      *
-     * @param zkAddress 服务地址
      * @return 连接标志
      */
-    public CuratorFramework connectServer(String zkAddress) {
-        if (client == null) {
-            synchronized (ZkClientUtils.class) {
-                if (client == null) {
-                    client = CuratorFrameworkFactory.builder().connectString(zkAddress).sessionTimeoutMs(RPCConstant.SESSION_TIMEOUT)
-                            .retryPolicy(new RetryNTimes(RPCConstant.REGRY_TIMES, RPCConstant.REGRY_TIME))
-                            .build();
-                    client.start();
-                }
-            }
-        }
-        return client;
+    public boolean isConnected() {
+        return client.getZookeeperClient().isConnected();
     }
 
     /**
      * 创建节点
      *
-     * @param nodeName 节点路径
+     * @param path 节点路径
      */
 
-    public void createNode(String nodeName) {
+    public void createPersistent(String path) {
         try {
-            Stat stat = client.checkExists().forPath(nodeName); // 检查节点是否存在
+            Stat stat = client.checkExists().forPath(path); // 检查节点是否存在
             if (stat == null) {
                 client.create().creatingParentsIfNeeded()
                         .withMode(CreateMode.PERSISTENT)
-                        .forPath(nodeName);
+                        .forPath(path);
             }
         } catch (Exception e) {
-            log.error("zk创建节点失败", e);
+            throw new IllegalStateException(e.getMessage(), e);
         }
     }
 
@@ -68,19 +74,19 @@ public class ZkClientUtils implements AutoCloseable {
      * @param value    节点信息
      */
 
-    public void createNode(String nodeName, String value) {
+    public void createPersistent(String nodeName, String value) {
         try {
             Stat stat = client.checkExists().forPath(nodeName); // 检查节点是否存在
             if (stat == null) {
                 if (StringUtils.isEmpty(value)) {
-                    this.createNode(nodeName);
+                    this.createPersistent(nodeName);
                 } else {
                     client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT)  // 节点类型
                             .forPath(nodeName, value.getBytes(Charsets.UTF_8));
                 }
             }
         } catch (Exception e) {
-            log.error("zk创建节点失败", e);
+            throw new IllegalStateException(e.getMessage(), e);
         }
     }
 
@@ -90,16 +96,16 @@ public class ZkClientUtils implements AutoCloseable {
      * @param nodeName 节点名称
      * @param value    节点信息
      */
-    public void updateNode(String nodeName, String value) {
+    public void updatePersistent(String nodeName, String value) {
         try {
             Stat stat = client.checkExists().forPath(nodeName); // 检查节点是否存在
             if (stat == null) {
-                this.createNode(nodeName, value);
+                this.createPersistent(nodeName, value);
             } else {
                 this.client.setData().forPath(nodeName, value.getBytes(Charsets.UTF_8));
             }
         } catch (Exception e) {
-            log.error("zk更新节点信息失败", e);
+            throw new IllegalStateException(e.getMessage(), e);
         }
     }
 
@@ -109,12 +115,12 @@ public class ZkClientUtils implements AutoCloseable {
      * @param nodeName 节点路径
      * @return 节点信息
      */
-    public String readNode(String nodeName) {
+    public String readPersistent(String nodeName) {
         byte[] bytes = null;
         try {
             bytes = this.client.getData().forPath(nodeName);
         } catch (Exception e) {
-            log.error("zk读取节点信息失败", e);
+            throw new IllegalStateException(e.getMessage(), e);
         }
         return new String(bytes != null ? bytes : new byte[0]);
     }
@@ -130,9 +136,8 @@ public class ZkClientUtils implements AutoCloseable {
         try {
             return this.client.getChildren().forPath(nodeName);
         } catch (Exception e) {
-            log.error("zk更新节点列表失败", e);
+            throw new IllegalStateException(e.getMessage(), e);
         }
-        return null;
     }
 
     /**
@@ -141,7 +146,7 @@ public class ZkClientUtils implements AutoCloseable {
      * @param nodeName 节点路径
      * @param value    节点信息
      */
-    public void createEphemeralNode(String nodeName, String value) {
+    public void createEphemeral(String nodeName, String value) {
         byte[] bytes = (value == null ? "" : value).getBytes(Charsets.UTF_8);
         try {
             this.client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL)
@@ -149,6 +154,21 @@ public class ZkClientUtils implements AutoCloseable {
         } catch (Exception e) {
             log.error("zk创建临时节点失败", e);
         }
+    }
+
+
+    public List<String> addTargetChildListener(String path, CuratorWatcher listener) {
+        try {
+            return client.getChildren().usingWatcher(listener).forPath(path);
+        } catch (KeeperException.NoNodeException e) {
+            return null;
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        }
+    }
+
+    public void removeTargetChildListener(String path, CuratorWatcher listener) {
+        ((CuratorWatcherImpl) listener).unwatch();
     }
 
     /**
@@ -164,8 +184,8 @@ public class ZkClientUtils implements AutoCloseable {
         }
     }
 
-    public InterProcessMutex tryLock(String nodeName){
-        InterProcessMutex lock = new InterProcessMutex(client,nodeName);
+    public InterProcessMutex tryLock(String nodeName) {
+        InterProcessMutex lock = new InterProcessMutex(client, nodeName);
         return lock;
     }
 
@@ -177,54 +197,26 @@ public class ZkClientUtils implements AutoCloseable {
                 .equals(this.client.getState()))) {
             this.client.close();
         }
-        System.out.println("关闭连接");
     }
 
-    static int count = 10;
-    public static void genarNo(){
-        try {
-            count--;
-            System.out.println(count);
-        } finally {
+    private class CuratorWatcherImpl implements CuratorWatcher {
 
+        private volatile ChildListener listener;
+
+        public CuratorWatcherImpl(ChildListener listener) {
+            this.listener = listener;
         }
-    }
 
-    public static void main(String[] args) {
-        try {
-            ZkClientUtils zkClientUtils = new ZkClientUtils();
-            CuratorFramework client = zkClientUtils.connectServer("localhost:2181");
-            final InterProcessMutex lock = new InterProcessMutex(client, "/super");
-            final CountDownLatch countdown = new CountDownLatch(1);
-            for(int i = 0; i < 10; i++){
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            countdown.await();
-                            //加锁
-                            lock.acquire();
-                            //-------------业务处理开始
-                            genarNo();
-                            //-------------业务处理结束
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } finally {
-                            try {
-                                //释放
-                                lock.release();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                },"t" + i).start();
+        public void unwatch() {
+            this.listener = null;
+        }
+
+        public void process(WatchedEvent event) throws Exception {
+            if (listener != null) {
+                listener.childChanged(event.getPath(), client.getChildren().usingWatcher(this).forPath(event.getPath()));
             }
-            Thread.sleep(100);
-            countdown.countDown();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
+
 
 }
