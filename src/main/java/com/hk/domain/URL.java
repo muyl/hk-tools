@@ -6,17 +6,13 @@ public final class URL implements Serializable {
 
     private final String host;
 
-    private final int port;
-
 
     protected URL() {
         this.host = null;
-        this.port = 0;
     }
 
-    public URL(String host, int port) {
+    public URL(String host) {
         this.host = host;
-        this.port = port;
     }
 
 
@@ -24,7 +20,5 @@ public final class URL implements Serializable {
         return host;
     }
 
-    public int getPort() {
-        return port;
-    }
+
 }

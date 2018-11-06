@@ -22,18 +22,25 @@ import java.util.List;
 /**
  * zookeeper工具类
  */
-@Slf4j
-public class ZkClient implements AutoCloseable {
+public class ZookeeperClient implements AutoCloseable {
     private CuratorFramework client; // 客户端
 
-    public ZkClient(URL url) {
+    public ZookeeperClient(URL url) {
         try {
-            CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
-                    .connectString(url.getHost())
-                    .retryPolicy(new RetryNTimes(Integer.MAX_VALUE, 1000))
-                    .connectionTimeoutMs(5000);
-            client = builder.build();
+//            CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
+//                    .connectString(url.getHost())
+//                    .retryPolicy(new RetryNTimes(Integer.MAX_VALUE, 1000))
+//                    .connectionTimeoutMs(5000);
+
+//            client = builder.build();
+//            client.start();
+
+            client = CuratorFrameworkFactory.builder().connectString(url.getHost()).sessionTimeoutMs(RPCConstant.SESSION_TIMEOUT)
+                    .retryPolicy(new RetryNTimes(RPCConstant.REGRY_TIMES, RPCConstant.REGRY_TIME))
+                    .build();
             client.start();
+
+
         } catch (Exception e) {
             throw new IllegalStateException(e.getMessage(), e);
         }
@@ -152,7 +159,7 @@ public class ZkClient implements AutoCloseable {
             this.client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL)
                     .forPath(nodeName, bytes);
         } catch (Exception e) {
-            log.error("zk创建临时节点失败", e);
+            throw new IllegalStateException(e.getMessage(), e);
         }
     }
 

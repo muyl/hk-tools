@@ -10,6 +10,9 @@ import com.google.common.primitives.Ints;
 public final class NumberUtil {
 
     public static int toInt(String str){
+        if (StringUtil.isEmpty(str)){
+            return 0;
+        }
         return Ints.tryParse(str);
     }
 }
