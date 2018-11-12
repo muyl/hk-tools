@@ -3,7 +3,6 @@ package com.hk.utils;
 import com.hk.constant.RPCConstant;
 import com.hk.domain.URL;
 import com.hk.service.ChildListener;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
