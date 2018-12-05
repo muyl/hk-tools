@@ -1,17 +1,8 @@
 package com.hk;
 
-import com.google.common.collect.Lists;
-import com.hk.domain.URL;
-import com.hk.utils.ZookeeperClient;
+import com.hk.core.domain.URL;
+import com.hk.core.utils.ZookeeperClient;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.curator.framework.CuratorFramework;
-import org.apache.curator.framework.CuratorFrameworkFactory;
-import org.apache.curator.framework.recipes.leader.LeaderLatch;
-import org.apache.curator.framework.recipes.leader.LeaderLatchListener;
-import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.apache.curator.utils.CloseableUtils;
-
-import java.util.List;
 
 /**
  * Hello world!
