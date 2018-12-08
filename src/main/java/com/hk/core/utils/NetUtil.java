@@ -456,7 +456,6 @@ public class NetUtil {
 		return IDN.toASCII(unicode);
 	}
 
-	// ----------------------------------------------------------------------------------------- Private method start
 	/**
 	 * 指定IP的long是否在指定范围内
 	 * 
@@ -468,5 +467,4 @@ public class NetUtil {
 	private static boolean isInner(long userIp, long begin, long end) {
 		return (userIp >= begin) && (userIp <= end);
 	}
-	// ----------------------------------------------------------------------------------------- Private method end
 }
