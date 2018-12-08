@@ -20,7 +20,7 @@ import java.util.LinkedHashSet;
 
 /**
  * 网络相关工具
- * 
+ *
  * @author xiaoleilu
  *
  */
@@ -29,7 +29,7 @@ public class NetUtil {
 
 	/**
 	 * 根据long值获取ip v4地址
-	 * 
+	 *
 	 * @param longIP IP的long表示形式
 	 * @return IP V4 地址
 	 */
@@ -49,7 +49,7 @@ public class NetUtil {
 
 	/**
 	 * 根据ip地址计算出long型的数据
-	 * 
+	 *
 	 * @param strIP IP V4 地址
 	 * @return long值
 	 */
@@ -72,7 +72,7 @@ public class NetUtil {
 
 	/**
 	 * 检测本地端口可用性
-	 * 
+	 *
 	 * @param port 被检测的端口
 	 * @return 是否可用
 	 */
@@ -92,7 +92,7 @@ public class NetUtil {
 
 	/**
 	 * 是否为有效的端口
-	 * 
+	 *
 	 * @param port 端口号
 	 * @return 是否有效
 	 */
@@ -104,7 +104,7 @@ public class NetUtil {
 	/**
 	 * 判定是否为内网IP<br>
 	 * 私有IP：A类 10.0.0.0-10.255.255.255 B类 172.16.0.0-172.31.255.255 C类 192.168.0.0-192.168.255.255 当然，还有127这个网段是环回地址
-	 * 
+	 *
 	 * @param ipAddress IP地址
 	 * @return 是否为内网IP
 	 */
@@ -127,7 +127,7 @@ public class NetUtil {
 
 	/**
 	 * 相对URL转换为绝对URL
-	 * 
+	 *
 	 * @param absoluteBasePath 基准路径，绝对
 	 * @param relativePath 相对路径
 	 * @return 绝对URL
@@ -143,7 +143,7 @@ public class NetUtil {
 
 	/**
 	 * 隐藏掉IP地址的最后一部分为 * 代替
-	 * 
+	 *
 	 * @param ip IP地址
 	 * @return 隐藏部分后的IP
 	 */
@@ -153,7 +153,7 @@ public class NetUtil {
 
 	/**
 	 * 隐藏掉IP地址的最后一部分为 * 代替
-	 * 
+	 *
 	 * @param ip IP地址
 	 * @return 隐藏部分后的IP
 	 */
@@ -165,7 +165,7 @@ public class NetUtil {
 	 * 构建InetSocketAddress<br>
 	 * 当host中包含端口时（用“：”隔开），使用host中的端口，否则使用默认端口<br>
 	 * 给定host为空时使用本地host（127.0.0.1）
-	 * 
+	 *
 	 * @param host Host
 	 * @param defaultPort 默认端口
 	 * @return InetSocketAddress
@@ -192,7 +192,7 @@ public class NetUtil {
 
 	/**
 	 * 通过域名得到IP
-	 * 
+	 *
 	 * @param hostName HOST
 	 * @return ip address or hostName if UnknownHostException
 	 */
@@ -206,7 +206,7 @@ public class NetUtil {
 
 	/**
 	 * 获取本机所有网卡
-	 * 
+	 *
 	 * @return 所有网卡，异常返回<code>null</code>
 	 * @since 3.0.1
 	 */
@@ -224,7 +224,7 @@ public class NetUtil {
 	/**
 	 * 获得本机的IP地址列表<br>
 	 * 返回的IP列表有序，按照系统设备顺序
-	 * 
+	 *
 	 * @return IP地址列表 {@link LinkedHashSet}
 	 */
 	public static LinkedHashSet<String> localIpv4s() {
@@ -259,9 +259,9 @@ public class NetUtil {
 	 * 获取本机网卡IP地址，这个地址为所有网卡中非回路地址的第一个<br>
 	 * 如果获取失败调用 {@link InetAddress#getLocalHost()}方法获取。<br>
 	 * 此方法不会抛出异常，获取失败将返回<code>null</code><br>
-	 * 
+	 *
 	 * 参考：http://stackoverflow.com/questions/9481865/getting-the-ip-address-of-the-current-machine-using-java
-	 * 
+	 *
 	 * @return 本机网卡IP地址，获取失败返回<code>null</code>
 	 * @since 3.0.7
 	 */
@@ -277,9 +277,9 @@ public class NetUtil {
 	 * 获取本机网卡IP地址，这个地址为所有网卡中非回路地址的第一个<br>
 	 * 如果获取失败调用 {@link InetAddress#getLocalHost()}方法获取。<br>
 	 * 此方法不会抛出异常，获取失败将返回<code>null</code><br>
-	 * 
+	 *
 	 * 参考：http://stackoverflow.com/questions/9481865/getting-the-ip-address-of-the-current-machine-using-java
-	 * 
+	 *
 	 * @return 本机网卡IP地址，获取失败返回<code>null</code>
 	 * @since 3.0.1
 	 */
@@ -319,7 +319,7 @@ public class NetUtil {
 
 	/**
 	 * 获得本机MAC地址
-	 * 
+	 *
 	 * @return 本机MAC地址
 	 */
 	public static String getLocalMacAddress() {
@@ -328,7 +328,7 @@ public class NetUtil {
 
 	/**
 	 * 获得指定地址信息中的MAC地址，使用分隔符“-”
-	 * 
+	 *
 	 * @param inetAddress {@link InetAddress}
 	 * @return MAC地址，用-分隔
 	 */
@@ -338,7 +338,7 @@ public class NetUtil {
 
 	/**
 	 * 获得指定地址信息中的MAC地址
-	 * 
+	 *
 	 * @param inetAddress {@link InetAddress}
 	 * @param separator 分隔符，推荐使用“-”或者“:”
 	 * @return MAC地址，用-分隔
@@ -372,7 +372,7 @@ public class NetUtil {
 
 	/**
 	 * 创建 {@link InetSocketAddress}
-	 * 
+	 *
 	 * @param host 域名或IP地址
 	 * @param port 端口
 	 * @return {@link InetSocketAddress}
@@ -383,9 +383,9 @@ public class NetUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * 简易的使用Socket发送数据
-	 * 
+	 *
 	 * @param host Server主机
 	 * @param port Server端口
 	 * @param isBlock 是否阻塞方式
@@ -403,9 +403,9 @@ public class NetUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * 使用普通Socket发送数据
-	 * 
+	 *
 	 * @param host Server主机
 	 * @param port Server端口
 	 * @param data 数据
@@ -428,7 +428,7 @@ public class NetUtil {
 	/**
 	 * 是否在CIDR规则配置范围内<br>
 	 * 方法来自：【成都】小邓
-	 * 
+	 *
 	 * @param ip 需要验证的IP
 	 * @param cidr CIDR规则
 	 * @return 是否在范围内
@@ -447,7 +447,7 @@ public class NetUtil {
 
 	/**
 	 * Unicode域名转puny code
-	 * 
+	 *
 	 * @param unicode Unicode域名
 	 * @return puny code
 	 * @since 4.1.22
@@ -458,7 +458,7 @@ public class NetUtil {
 
 	/**
 	 * 指定IP的long是否在指定范围内
-	 * 
+	 *
 	 * @param userIp 用户IP
 	 * @param begin 开始IP
 	 * @param end 结束IP
