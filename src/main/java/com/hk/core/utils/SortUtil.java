@@ -22,10 +22,16 @@ public class SortUtil {
      * @param orderColumn 要排序的属性。前面的值优先级高。
      */
     public static <V> void sort(List<V> list, final OrderColumn... orderColumn) {
-        Collections.sort(list, (o1, o2) -> {
-            if (o1 == null && o2 == null) return 0;
-            if (o1 == null) return -1;
-            if (o2 == null) return 1;
+        list.sort((o1, o2) -> {
+            if (o1 == null && o2 == null) {
+                return 0;
+            }
+            if (o1 == null) {
+                return -1;
+            }
+            if (o2 == null) {
+                return 1;
+            }
 
             for (OrderColumn property : orderColumn) {
                 Comparator c = new BeanComparator(property.getColumnName());
