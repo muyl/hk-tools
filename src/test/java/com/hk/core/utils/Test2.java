@@ -6,6 +6,7 @@ import com.xiaoleilu.hutool.util.ReUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -17,13 +18,6 @@ import java.util.List;
 public class Test2 {
     public static void main(String[] args) {
 
-        System.out.println(SystemUtil.getUserInfo());
-        UUID uuid = UUID.randomUUID();
-        System.out.println(uuid.toString(true));
-        String content = "ENC["+uuid+"]";
-        String regex = "ENC[\\w\\W*]";
-        List list = ReUtil.findAll(regex,content,0);
-        list.forEach(str -> System.out.println(str));
-        System.out.println(ReUtil.get(regex, content, 0));
+        System.out.println(MessageFormat.format("a{0},{1}", 1, 2));
     }
 }
